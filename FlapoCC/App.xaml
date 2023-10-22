@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlapoCC.App">
+    <Application.Resources>
+        <Style x:Key="CardStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="AliceBlue"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="HasShadow" Value="True"/>
+        </Style>
+
+        <Style x:Key="BoxViewStyle" TargetType="BoxView">
+            <Setter Property="BackgroundColor" Value="Black" />
+            <Setter Property="HeightRequest" Value="1"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        </Style>
+        <Style x:Key="SmallLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+        <Style x:Key="MicroLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Micro"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+    </Application.Resources>
+</Application>

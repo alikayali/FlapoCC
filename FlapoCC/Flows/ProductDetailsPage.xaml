@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlapoCC.Flows.ProductDetailsPage"
+             x:Name="RootPage"
+             xmlns:resources="clr-namespace:FlapoCC.Resources.Localization"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:IsNotNullOrEmptyConverter x:Key="IsNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="{Binding Article.Image}" Aspect="AspectFit" />
+            <Frame Grid.Row="0" VerticalOptions="End" HeightRequest="60" HasShadow="True">
+                <Frame.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="Transparent" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Frame.Background>
+            </Frame>
+
+            <Frame Grid.Row="1" Style="{StaticResource CardStyle}" VerticalOptions="Fill">
+                <ScrollView>
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Label Text="{Binding Article.BrandName}" Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                        <BoxView Style="{StaticResource BoxViewStyle}" VerticalOptions="Start"/>
+                        <Label Text="{Binding Article.Name}" Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                        <BoxView Style="{StaticResource BoxViewStyle}" VerticalOptions="Start"/>
+                        <Label Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0}: {1}€">
+                                    <Binding Source="{x:Static resources:AppResources.Prise}"/>
+                                    <Binding Path="Article.Price"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <BoxView Style="{StaticResource BoxViewStyle}" VerticalOptions="Start"/>
+                        <Label Text="{Binding Article.PricePerUnitText}" Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                        <BoxView Style="{StaticResource BoxViewStyle}" VerticalOptions="Start"/>
+                        <Label Text="{Binding Article.ShortDescription}" Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                        <BoxView Style="{StaticResource BoxViewStyle}" VerticalOptions="Start" 
+                                 IsVisible="{Binding Article.DescriptionText, Converter={StaticResource IsNotNullOrEmptyConverter}}"/>
+                        <Label Text="{Binding Article.DescriptionText}" Style="{StaticResource SmallLabelStyle}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+                               IsVisible="{Binding Article.DescriptionText, Converter={StaticResource IsNotNullOrEmptyConverter}}"/>
+                    </StackLayout>
+                </ScrollView>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

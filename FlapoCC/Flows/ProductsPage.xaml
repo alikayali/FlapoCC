@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlapoCC.Flows.ProductsPage"
+             x:Name="RootPage"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:model="clr-namespace:FlapoCC.Core.Data.Model;assembly=FlapoCC.Core.Data"
+             xmlns:viewModel="clr-namespace:FlapoCC.ViewModels;assembly=FlapoCC"
+             xmlns:resources="clr-namespace:FlapoCC.Resources.Localization"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ProductTemplate" x:DataType="model:Article">
+                <Frame Style="{StaticResource CardStyle}">
+                    <StackLayout>
+                        <Image Source="{Binding Image}"
+                               Aspect="AspectFit"
+                               HeightRequest="100"
+                               WidthRequest="100"/>
+                        <Grid RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="0">
+                            <BoxView Grid.Row="0" Style="{StaticResource BoxViewStyle}"/>
+                            <Label Text="{Binding Name}" Grid.Row="1" Style="{StaticResource SmallLabelStyle}" FontAttributes="Bold"/>
+                            <Label Text="{Binding ShortDescription}" Grid.Row="2" Style="{StaticResource MicroLabelStyle}"/>
+                            <Label Text="{Binding PricePerUnitText}" Grid.Row="3" Style="{StaticResource MicroLabelStyle}"/>
+                            <Label Grid.Row="4" Style="{StaticResource SmallLabelStyle}" FontAttributes="Bold">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}: {1}€">
+                                        <Binding Source="{x:Static resources:AppResources.Prise}"/>
+                                        <Binding Path="Price"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.SelectProductCommand}" CommandParameter="{Binding .}"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{x:Static resources:AppResources.SortByPrice}" Order="Secondary" Priority="0" Command="{Binding SortByPriceCommand}"/>
+        <ToolbarItem Text="{x:Static resources:AppResources.SortByPricePerBottle}" Order="Secondary" Priority="1" Command="{Binding SortByPricePerBottleCommand}"/>
+        <ToolbarItem Text="{x:Static resources:AppResources.SortByPricePerLiter}" Order="Secondary" Priority="2" Command="{Binding SortByPricePerLiterCommand}"/>
+        <ToolbarItem Text="{x:Static resources:AppResources.SortByNumberOfBottles}" Order="Secondary" Priority="3" Command="{Binding SortByNumberOfBottlesCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <FlexLayout Direction="Row"
+                        Wrap="Wrap"
+                        AlignItems="Start"
+                        AlignContent="Center"
+                        JustifyContent="SpaceAround"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        BindableLayout.ItemsSource="{Binding Articles}"
+                        BindableLayout.ItemTemplate="{StaticResource ProductTemplate}"/>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
